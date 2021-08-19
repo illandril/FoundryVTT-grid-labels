@@ -1,0 +1,40 @@
+{
+    "name": "illandril-grid-labels",
+    "title": "Illandril's Grid Labels",
+    "description": "Adds labels to the scene grid.",
+    "version": "0.0.1",
+    "library": "false",
+    "manifestPlusVersion": "1.2.0",
+    "minimumCoreVersion": "0.8.9",
+    "compatibleCoreVersion": "0.8.9",
+    "type": "module",
+    "author": "Joe Spandrusyszyn (illandril)",
+    "authors": [
+        {
+            "name": "Joe Spandrusyszyn (illandril)",
+            "url": "https://github.com/illandril",
+            "email": "foundry-modules@illandril.net",
+            "discord": "joespan#3152",
+            "ko-fi": "illandril",
+            "patreon": "illandril",
+            "reddit": "u/illandril"
+        }
+    ],
+    "dependencies": [],
+    "conflicts": [],
+    "esmodules": [
+        "./init.js"
+    ],
+    "styles": [],
+    "languages": [],
+    "license": "./LICENSE",
+    "url": "https://github.com/illandril/FoundryVTT-grid-labels",
+    "bugs": "https://github.com/illandril/FoundryVTT-grid-labels/issues",
+    "flags": {
+        "allowBugReporter": true
+    },
+    "changelog": "https://github.com/illandril/FoundryVTT-grid-labels/blob/master/CHANGELOG.md",
+    "manifest": "https://github.com/illandril/FoundryVTT-grid-labels/releases/latest/download/module.json",
+    "download": "https://github.com/illandril/FoundryVTT-grid-labels/releases/download/v0.0.0/module.zip",
+    "media": []
+}
