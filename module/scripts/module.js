@@ -1,5 +1,6 @@
 export const KEY = 'illandril-grid-labels';
 export const NAME = "Illandril's Grid Labels";
+export const CSS_PREFIX = `${KEY}--`;
 
 const _log = (logFN, ...args) => {
   logFN.apply(console, [`%c${NAME} |`, 'color: rgba(0,0,0,0.5);', ...args]);

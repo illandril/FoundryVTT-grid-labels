@@ -2,7 +2,7 @@
 
 name: Update Changelog
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   workflow_dispatch:
 
@@ -41,5 +41,5 @@ jobs:
           add: CHANGELOG.md
           author_name: Changelog Updater
           author_email: github@illandril.net
-          branch: master
+          branch: main
           message: Updated changelog

@@ -1,0 +1,6 @@
+{
+  "illandril-grid-labels.setting.showGrid.label": "Show Grid Labels",
+  "illandril-grid-labels.setting.showGrid.hint": "Turn the grid labels on or off. The grid can also be enabled or disabled through script macros. Go to https://github.com/illandril/FoundryVTT-grid-labels for details.",
+  "illandril-grid-labels.setting.showGridDefault.label": "Show Grid Labels Default",
+  "illandril-grid-labels.setting.showGridDefault.hint": "Sets the default value for the Show Grid Labels setting for new users."
+}

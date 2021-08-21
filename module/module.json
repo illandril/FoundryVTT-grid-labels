@@ -20,13 +20,20 @@
             "reddit": "u/illandril"
         }
     ],
+    "socket": true,
     "dependencies": [],
     "conflicts": [],
     "esmodules": [
-        "./init.js"
+        "./scripts/index.js"
     ],
-    "styles": [],
-    "languages": [],
+    "styles": ["./style.css"],
+    "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "lang/en.json"
+        }
+    ],
     "license": "./LICENSE",
     "url": "https://github.com/illandril/FoundryVTT-grid-labels",
     "bugs": "https://github.com/illandril/FoundryVTT-grid-labels/issues",
