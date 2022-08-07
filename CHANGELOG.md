@@ -1,5 +1,9 @@
 # Changelog
 
+## [v0.1.0](https://github.com/illandril/FoundryVTT-grid-labels/tree/v0.1.0) (2022-08-07)
+
+[Full Changelog](https://github.com/illandril/FoundryVTT-grid-labels/compare/v0.0.2...v0.1.0)
+
 ## [v0.0.2](https://github.com/illandril/FoundryVTT-grid-labels/tree/v0.0.2) (2021-08-21)
 
 [Full Changelog](https://github.com/illandril/FoundryVTT-grid-labels/compare/v0.0.1...v0.0.2)

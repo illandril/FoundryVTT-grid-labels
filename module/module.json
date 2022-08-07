@@ -2,7 +2,7 @@
     "id": "illandril-grid-labels",
     "title": "Illandril's Grid Labels",
     "description": "Adds labels to the scene grid.",
-    "version": "0.0.2",
+    "version": "0.1.0",
     "library": "false",
     "manifestPlusVersion": "1.2.0",
     "compatibility": {
@@ -43,6 +43,6 @@
     },
     "changelog": "https://github.com/illandril/FoundryVTT-grid-labels/blob/master/CHANGELOG.md",
     "manifest": "https://github.com/illandril/FoundryVTT-grid-labels/releases/latest/download/module.json",
-    "download": "https://github.com/illandril/FoundryVTT-grid-labels/releases/download/v0.0.2/module.zip",
+    "download": "https://github.com/illandril/FoundryVTT-grid-labels/releases/download/v0.1.0/module.zip",
     "media": []
 }
