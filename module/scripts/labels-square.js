@@ -11,7 +11,9 @@ const toColumnLetters = (x) => {
 };
 
 const setupSquareGridLabels = (gridElem, grid) => {
-  const { paddingX, paddingY, size, sceneHeight, sceneWidth } = grid.options.dimensions;
+  const dimensions = grid.options.dimensions;
+  const { x: paddingX, y: paddingY, width: sceneWidth, height: sceneHeight } = dimensions.sceneRect;
+  const size = dimensions.size;
   gridElem.style.margin = `${paddingY}px ${paddingX}px`;
 
   const nx = Math.floor(sceneWidth / size);

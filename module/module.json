@@ -1,14 +1,15 @@
 {
-    "name": "illandril-grid-labels",
+    "id": "illandril-grid-labels",
     "title": "Illandril's Grid Labels",
     "description": "Adds labels to the scene grid.",
     "version": "0.0.2",
     "library": "false",
     "manifestPlusVersion": "1.2.0",
-    "minimumCoreVersion": "0.8.9",
-    "compatibleCoreVersion": "9",
+    "compatibility": {
+        "minimum": 10,
+        "verified": 10
+    },
     "type": "module",
-    "author": "Joe Spandrusyszyn (illandril)",
     "authors": [
         {
             "name": "Joe Spandrusyszyn (illandril)",
@@ -21,8 +22,6 @@
         }
     ],
     "socket": true,
-    "dependencies": [],
-    "conflicts": [],
     "esmodules": [
         "./scripts/index.js"
     ],

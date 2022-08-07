@@ -1,4 +1,4 @@
-import { CSS_PREFIX } from './module.js';
+import { log, CSS_PREFIX } from './module.js';
 import Settings, { SETTINGS_UPDATED } from './settings.js';
 
 import setupSquareGridLabels from './labels-square.js';
@@ -12,16 +12,18 @@ const emptyNode = (node) => {
 const gridElem = document.createElement('div');
 gridElem.classList.add(`${CSS_PREFIX}grid-overlay`);
 
-Hooks.on('canvasReady', () => {
+Hooks.on('renderHeadsUpDisplay', () => {
   emptyNode(gridElem);
-  const hudElem = document.getElementById('hud');
 
   const grid = game?.canvas?.grid?.grid;
   if (grid instanceof SquareGrid) {
+    log.info('Appending grid');
+    const hudElem = document.getElementById('hud');
     hudElem.appendChild(gridElem);
     setupSquareGridLabels(gridElem, grid);
   } else {
-    hudElem.removeChild(gridElem);
+    log.info('Removing grid');
+    gridElem.parentNode?.removeChild(gridElem);
   }
 });
 
