@@ -1,0 +1,61 @@
+.illandril-grid-labels--grid--container {
+  pointer-events: none;
+  display: grid;
+
+  position: absolute;
+  grid-gap: 0;
+  padding: 0;
+  font-size: var(--font-size, 1rem);
+  opacity: var(--text-opacity, 0.85);
+  z-index: 0;
+
+  &[aria-hidden="true"] {
+    display: none;
+  }
+
+  justify-items: center;
+  &[data-h="left"] {
+    justify-items: flex-start;
+    & > div {
+      justify-content: flex-start;
+    }
+  }
+  &[data-h="right"] {
+    justify-items: flex-end;
+    & > div {
+      justify-content: flex-end;
+    }
+  }
+
+  align-items: center;
+  &[data-v="top"] {
+    align-items: flex-start;
+    & > div {
+      align-content: flex-start;
+    }
+  }
+  &[data-v="bottom"] {
+    align-items: flex-end;
+    & > div {
+      align-content: flex-end;
+    }
+  }
+
+  & > div {
+    font-size: var(--scale, 100%);
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    width: 0;
+    height: 0;
+    color: var(--text-color, #fff);
+    text-shadow:
+      0 0 var(--text-outline-thickness, 0.125rem) var(--text-outline, #000),
+      0 0 var(--text-outline-thickness, 0.125rem) var(--text-outline, #000),
+      0 0 var(--text-outline-thickness, 0.125rem) var(--text-outline, #000),
+      0 0 var(--text-outline-thickness, 0.125rem) var(--text-outline, #000),
+      0 0 var(--text-outline-thickness, 0.125rem) var(--text-outline, #000);
+    padding: 0.25em;
+    outline-offset: -4px;
+  }
+}

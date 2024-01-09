@@ -1,0 +1,150 @@
+{
+  "illandril-grid-labels": {
+    "hotkey": {
+      "toggleGrid": {
+        "label": "Toggle Grid Labels",
+        "hint": "Toggles the Show Grid Labels setting"
+      },
+      "toggleRulers": {
+        "label": "Toggle Rulers",
+        "hint": "Toggles the Show Rulers setting"
+      },
+      "tooltip": {
+        "label": "Tooltip Hotkey",
+        "hint": "Tooltips are shown while the Tooltip Hotkey is pressed if Use Tooltip Hotkey is enabled"
+      }
+    },
+    "setting": {
+      "debug": {
+        "label": "Debug Mode",
+        "hint": "Leave this disabled unless specifically asked to enable it by Illandril (otherwise, it will slow things down)."
+      },
+      "showGrid": {
+        "label": "Show Grid Labels",
+        "hint": "Turn the grid labels on or off"
+      },
+      "gridFontSize": {
+        "label": "Grid Label Font Size",
+        "hint": "The size of the grid label text"
+      },
+      "gridScaleFontSize": {
+        "label": "Grid Label Scale with Zoom",
+        "hint": "If enabled, the grid labels will stay the same size relative to the grid squares as you zoom in and out (just like tokens, drawings, etc). If disabled, the grid labels will stay a fixed size as you zoom in and out."
+      },
+      "gridTextOutlineThickness": {
+        "label": "Grid Label Shadow Thickness",
+        "hint": "The thickness of the of the shadows of the grid labels"
+      },
+      "gridTextColor": {
+        "label": "Grid Label Color",
+        "hint": "The color of the grid labels (supports all valid CSS colors)"
+      },
+      "gridTextOpacity": {
+        "label": "Grid Label Opacity",
+        "hint": "The opacity percentage of the grid labels (lower number = more transparent)"
+      },
+      "gridTextOutline": {
+        "label": "Grid Label Shadow Color",
+        "hint": "The color of the shadows of the grid labels (supports all valid CSS colors)"
+      },
+      "gridTextVAlignment": {
+        "label": "Grid Label Vertical Alignment",
+        "hint": "The vertical position of the grid labels inside each grid cell",
+        "choice": {
+          "top": "Top",
+          "center": "Center",
+          "bottom": "Bottom"
+        }
+      },
+      "gridTextHAlignment": {
+        "label": "Grid Label Horizontal Alignment",
+        "hint": "The horizontal position of the grid labels inside each grid cell",
+        "choice": {
+          "left": "Left",
+          "center": "Center",
+          "right": "Right"
+        }
+      },
+
+      "showRulers": {
+        "label": "Show Rulers",
+        "hint": "Turn the rulers on or off (column labels above the board, row labels to the left of the board)"
+      },
+      "showRulerOverlay": {
+        "label": "Show Ruler Overlay",
+        "hint": "Turn the Ruler Overlay on or off (alternating black and white grid that shows over the board). Note: Show Rulers must be enabled for this setting to work."
+      },
+      "rulerFontSize": {
+        "label": "Ruler Font Size",
+        "hint": "The size of the ruler label text"
+      },
+      "rulerTextOddColor": {
+        "label": "Ruler Text Color, Odd",
+        "hint": "The color of the ruler labels for odd rows and columns (supports all valid CSS colors)"
+      },
+      "rulerTextEvenColor": {
+        "label": "Ruler Text Color, Even",
+        "hint": "The color of the ruler labels for even rows and columns (supports all valid CSS colors)"
+      },
+      "rulerTextOutlineThickness": {
+        "label": "Ruler Text Shadow Thickness",
+        "hint": "The thickness of the shadows of the ruler labels"
+      },
+      "rulerTextOddOutline": {
+        "label": "Ruler Text Shadow Color, Odd",
+        "hint": "The color of the shadows of the ruler labels for odd rows and columns (supports all valid CSS colors)"
+      },
+      "rulerTextEvenOutline": {
+        "label": "Ruler Text Shadow Color, Even",
+        "hint": "The color of the shadows of the ruler labels for even rows and columns (supports all valid CSS colors)"
+      },
+      "rulerTextOddOpacity": {
+        "label": "Ruler Text Opacity, Odd",
+        "hint": "The opacity percentage of the ruler labels for odd rows and columns (lower number = more transparent)"
+      },
+      "rulerTextEvenOpacity": {
+        "label": "Ruler Text Opacity, Even",
+        "hint": "The opacity percentage of the ruler labels for even rows and columns (lower number = more transparent)"
+      },
+      "rulerOverlayOddColor": {
+        "label": "Ruler Overlay Color, Odd",
+        "hint": "The color of the ruler overlay for odd rows and columns (supports all valid CSS colors)"
+      },
+      "rulerOverlayEvenColor": {
+        "label": "Ruler Overlay Color, Even",
+        "hint": "The color of the ruler overlay for even rows and columns (supports all valid CSS colors)"
+      },
+      "rulerOverlayOddOpacity": {
+        "label": "Ruler Overlay Opacity, Odd",
+        "hint": "The opacity percentage of the ruler overlay for odd rows and columns (lower number = more transparent)"
+      },
+      "rulerOverlayEvenOpacity": {
+        "label": "Ruler Overlay Opacity, Even",
+        "hint": "The opacity percentage of the ruler overlay for even rows and columns (lower number = more transparent)"
+      },
+
+      "showTooltipsOnHotkey": {
+        "label": "Use Tooltip Hotkey",
+        "hint": "If enabled, tooltips will only show when the Tooltip Hotkey is pressed (hotkey must be configured in Controls). If disabled, tooltips will show even if the Tooltip Hotkey is not pressed."
+      },
+      "tooltipPosition": {
+        "label": "Tooltip Position",
+        "hint": "Position of the tooltip, relative to the cursor.",
+        "choice": {
+          "bottom-right": "Bottom Right",
+          "bottom": "Bottom",
+          "bottom-left": "Bottom Left",
+          "left": "Left",
+          "top-left": "Top Left",
+          "top": "Top",
+          "top-right": "Top Right",
+          "right": "Right"
+        }
+      },
+      "tooltipFontSize": {
+        "label": "Tooltip Font Size",
+        "hint": "The size of the tooltip text"
+      }
+    }
+  }
+}

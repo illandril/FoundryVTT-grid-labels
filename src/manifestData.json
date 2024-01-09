@@ -1,0 +1,39 @@
+{
+  "compatibility": {
+    "minimum": 11,
+    "verified": 11
+  },
+  "esmodules": [
+    "module.js"
+  ],
+  "styles": [
+    "styles.css"
+  ],
+  "socket": true,
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "license": "LICENSE",
+  "media": [
+    {
+      "type": "cover",
+      "url": "https://github.com/illandril/FoundryVTT-grid-labels/raw/main/screenshots/cover.png"
+    },
+    {
+      "type": "screenshot",
+      "url": "https://github.com/illandril/FoundryVTT-grid-labels/raw/main/screenshots/ruler.png"
+    },
+    {
+      "type": "screenshot",
+      "url": "https://github.com/illandril/FoundryVTT-grid-labels/raw/main/screenshots/grid.png"
+    },
+    {
+      "type": "screenshot",
+      "url": "https://github.com/illandril/FoundryVTT-grid-labels/raw/main/screenshots/tooltip.png"
+    }
+  ]
+}
