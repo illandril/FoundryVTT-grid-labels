@@ -1,7 +1,6 @@
 import module from './module';
 import './tooltip.scss';
-import toExcelColumn from './utils/toExcelColumn';
-import toExcelRow from './utils/toExcelRow';
+import { getFormatter } from './utils/formatCell';
 
 const TooltipPosition = module.settings.register('tooltipPosition', String, 'bottom-right', {
   scope: 'client',
@@ -50,12 +49,6 @@ module.settings.register('tooltipFontSize', Number, 1, {
   callOnChangeOnInit: true,
 });
 
-
-type CanvasType = Canvas & {
-  canvasCoordinatesFromClient: (origin: { x: number, y: number }) => { x: number, y: number }
-  clientCoordinatesFromCanvas: (origin: { x: number, y: number }) => { x: number, y: number }
-};
-
 Hooks.on('renderTokenHUD', () => {
   if (!ShowTooltipsOnHotkey.get()) {
     tooltip.ariaHidden = 'true';
@@ -68,40 +61,37 @@ Hooks.once('ready', () => {
     module.logger.error('Tooltip initialization failed: no #board element found');
     return;
   }
-  board.addEventListener('mouseleave', (event) => {
-    module.logger.debug('mouseleave', event);
+  board.addEventListener('mouseleave', () => {
     if (!ShowTooltipsOnHotkey.get()) {
       tooltip.ariaHidden = 'true';
     }
   });
-  board.addEventListener('mouseenter', (event) => {
-    module.logger.debug('mouseenter', event);
+  board.addEventListener('mouseenter', () => {
     if (!ShowTooltipsOnHotkey.get()) {
       tooltip.ariaHidden = 'false';
     }
   });
   board.addEventListener('mousemove', (event) => {
     const tooltipPosition = TooltipPosition.get();
-    module.logger.debug('mousemove', tooltipPosition, event);
     container.setAttribute('data-position', tooltipPosition);
     // tooltip.ariaHidden = 'false';
-    const canvas = game.canvas as CanvasType;
-    const grid = canvas.grid;
+    const grid = game.canvas.grid;
     if (!grid) {
-      module.logger.debug('No grid so no grid labels');
+      module.logger.debug('No grid so no grid tooltips');
       return;
     }
+    if (grid.type !== foundry.CONST.GRID_TYPES.SQUARE && !grid.isHex) {
+      module.logger.debug('Not a square or hex grid, so no tooltips');
+      return;
+    }
+
     const dimensions = grid.grid.options.dimensions;
     const x = event.clientX;
     const y = event.clientY;
-    const coordinate = canvas.canvasCoordinatesFromClient({ x, y });
-    const col = Math.floor(
-      (coordinate.x - dimensions.sceneX) / dimensions.size,
-    );
-    const row = Math.floor(
-      (coordinate.y - dimensions.sceneY) / dimensions.size,
-    );
-    tooltip.textContent = `${toExcelColumn(col)}${toExcelRow(row)}`;
+    const coordinate = game.canvas.canvasCoordinatesFromClient({ x, y });
+    const [row, col] = grid.grid.getGridPositionFromPixels(coordinate.x - dimensions.sceneX, coordinate.y - dimensions.sceneY);
+
+    tooltip.textContent = getFormatter(grid.grid).formatCell(col, row);
     container.style.left = `${x}px`;
     container.style.top = `${y}px`;
   });

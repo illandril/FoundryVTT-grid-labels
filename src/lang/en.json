@@ -144,6 +144,64 @@
       "tooltipFontSize": {
         "label": "Tooltip Font Size",
         "hint": "The size of the tooltip text"
+      },
+      "format": {
+        "formatChoice": {
+          "letter": "Letter (Excel Column)",
+          "number": "Number (Excel Row)",
+          "zero2": "00, 01, ..., 98, 99",
+          "zero3": "000, 001, ..., 998, 999",
+          "zero4": "0000, 0001, ..., 9998, 9999"
+        },
+        "separatorChoice": {
+          "none": "No separator: AG47",
+          "space": "Space: AG 47",
+          "period": "Period: AG.47",
+          "periodSpace": "Period Space: AG. 47",
+          "comma": "Comma: AG,47",
+          "commaSpace": "Comma Space: AG, 47",
+          "slash": "Slash: AG/47",
+          "spaceSlashSpace": "Spaced Slash: AG / 47",
+          "pipe": "Pipe: AG|47",
+          "spacePipeSpace": "Spaced Pipe: AG | 47",
+          "newline": "Two Lines: AG over 47"
+        },
+        "square": {
+          "column": {
+            "label": "Square: Columns",
+            "hint": "The format used for the column label for square grids"
+          },
+          "row": {
+            "label": "Square: Rows",
+            "hint": "The format used for the row label for square grids"
+          },
+          "separator": {
+            "label": "Square: Separator",
+            "hint": "The separator to use in between the column and row labels for square grids"
+          },
+          "columnFirst": {
+            "label": "Square: Columns First",
+            "hint": "If enabled, the column value will be shown before the row value for square Grids"
+          }
+        },
+        "hex": {
+          "column": {
+            "label": "Hex: Columns",
+            "hint": "The format used for the column label for hex grids"
+          },
+          "row": {
+            "label": "Hex: Rows",
+            "hint": "The format used for the row label for hex grids"
+          },
+          "separator": {
+            "label": "Hex: Separator",
+            "hint": "The separator to use in between the column and row labels for hex grids"
+          },
+          "columnFirst": {
+            "label": "Hex: Columns First",
+            "hint": "If enabled, the column value will be shown before the row value for hex Grids"
+          }
+        }
       }
     }
   }

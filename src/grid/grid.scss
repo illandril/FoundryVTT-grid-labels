@@ -56,6 +56,22 @@
       0 0 var(--text-outline-thickness, 0.125rem) var(--text-outline, #000),
       0 0 var(--text-outline-thickness, 0.125rem) var(--text-outline, #000);
     padding: 0.25em;
-    outline-offset: -4px;
+    white-space: pre;
+    text-align: center;
+  }
+
+  &[data-type="hex"] {
+    & > div[data-columnar="true"] {
+      &[data-offset="true"] {
+        position: relative;
+        top: -50%;
+      }
+    }
+    & > div[data-columnar="false"] {
+      &[data-offset="true"] {
+        position: relative;
+        left: -50%;
+      }
+    }
   }
 }

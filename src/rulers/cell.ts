@@ -1,29 +1,41 @@
+import module from '../module';
+import emptyNode from '../utils/emptyNode';
 import { cssRuler } from './container';
 
-const createCell = (label: string) => {
+const overlayClass = cssRuler.child('overlay');
+const labelClass = cssRuler.child('label');
+
+const createCell = () => {
   const cell = document.createElement('div');
 
   const overlayElem = document.createElement('div');
-  overlayElem.classList.add(cssRuler.child('overlay'));
+  overlayElem.classList.add(overlayClass);
   cell.appendChild(overlayElem);
 
   const textElem = document.createElement('div');
-  textElem.appendChild(document.createTextNode(label));
-  textElem.classList.add(cssRuler.child('label'));
+  textElem.classList.add(labelClass);
   cell.appendChild(textElem);
 
   return cell;
 };
 
 export const createCells = ({ edge }: { edge: HTMLDivElement }, numCells: number, createLabel: (cell: number) => string) => {
-  const numShownCells = edge.children.length;
-  if (numShownCells < numCells) {
-    for (let row = numShownCells; row < numCells; row++) {
-      edge.appendChild(createCell(createLabel(row)));
+  for (let row = 0; row < numCells; row++) {
+    let cell = edge.children[row];
+    if (!cell) {
+      cell = createCell();
+      edge.appendChild(cell);
     }
-  } else {
-    for (let row = numShownCells; row > numCells; row--) {
-      edge.removeChild(edge.lastChild!);
+    const textElem = cell.querySelector(`.${labelClass}`);
+    if (!textElem) {
+      module.logger.error('Could not find label element', cell, labelClass);
+    } else {
+      emptyNode(textElem);
+      textElem.appendChild(document.createTextNode(createLabel(row)));
     }
+  }
+
+  while (edge.children.length > numCells) {
+    edge.removeChild(edge.lastChild!);
   }
 };

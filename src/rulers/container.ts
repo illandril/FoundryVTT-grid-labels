@@ -169,3 +169,5 @@ export const addEdge = ({ wrapper }: { wrapper: HTMLDivElement }) => {
 Hooks.once('ready', () => {
   document.body.appendChild(container);
 });
+
+export default container;
