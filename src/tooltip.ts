@@ -1,6 +1,10 @@
-import module from './module';
-import './tooltip.scss';
 import { getFormatter } from './utils/formatCell';
+import getCurrentGridDetails, { isHex, isSquare } from './utils/getCurrentGridDetails';
+import getSceneTopLeft from './utils/getSceneTopLeft';
+
+import module from './module';
+
+import './tooltip.scss';
 
 const TooltipPosition = module.settings.register('tooltipPosition', String, 'bottom-right', {
   scope: 'client',
@@ -75,23 +79,23 @@ Hooks.once('ready', () => {
     const tooltipPosition = TooltipPosition.get();
     container.setAttribute('data-position', tooltipPosition);
     // tooltip.ariaHidden = 'false';
-    const grid = game.canvas.grid;
-    if (!grid) {
+    const gridDetails = getCurrentGridDetails();
+    if (!gridDetails) {
       module.logger.debug('No grid so no grid tooltips');
       return;
     }
-    if (grid.type !== foundry.CONST.GRID_TYPES.SQUARE && !grid.isHex) {
+    if (!isSquare(gridDetails) && !isHex(gridDetails)) {
       module.logger.debug('Not a square or hex grid, so no tooltips');
       return;
     }
 
-    const dimensions = grid.grid.options.dimensions;
     const x = event.clientX;
     const y = event.clientY;
     const coordinate = game.canvas.canvasCoordinatesFromClient({ x, y });
-    const [row, col] = grid.grid.getGridPositionFromPixels(coordinate.x - dimensions.sceneX, coordinate.y - dimensions.sceneY);
+    const topLeft = getSceneTopLeft(gridDetails);
+    const [row, col] = gridDetails.grid.getGridPositionFromPixels(coordinate.x - topLeft.x, coordinate.y - topLeft.y);
 
-    tooltip.textContent = getFormatter(grid.grid).formatCell(col, row);
+    tooltip.textContent = getFormatter(gridDetails.grid).formatCell(col, row);
     container.style.left = `${x}px`;
     container.style.top = `${y}px`;
   });

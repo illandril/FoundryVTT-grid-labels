@@ -1,28 +1,26 @@
 import module from '../module';
 import emptyNode from '../utils/emptyNode';
 import { onFormatChage } from '../utils/formatCell';
+import getCurrentGridDetails, { isHex, isSquare } from '../utils/getCurrentGridDetails';
+
 import container, { hide, show } from './container';
-import './grid.scss';
 import { repositionHexGrid, setupHexGridLabels } from './hex';
 import './hotkey';
 import { repositionSquareGrid, setupSquareGridLabels } from './square';
 
+import './grid.scss';
+
 const repositionGrid = foundry.utils.debounce(() => {
-  const grid = game.canvas.grid;
-  if (!grid) {
+  const gridDetails = getCurrentGridDetails();
+  if (!gridDetails) {
     module.logger.debug('No grid so no grid labels');
     return;
   }
-  const stage = game.canvas.stage;
-  if (!stage) {
-    module.logger.debug('No stage so no grid labels');
-    return;
-  }
 
-  if (grid.type === foundry.CONST.GRID_TYPES.SQUARE) {
-    repositionSquareGrid(grid.grid as SquareGrid);
-  } else if (grid.isHex) {
-    repositionHexGrid(grid.grid as HexagonalGrid);
+  if (isSquare(gridDetails)) {
+    repositionSquareGrid(gridDetails);
+  } else if (isHex(gridDetails)) {
+    repositionHexGrid(gridDetails);
   }
 }, 1);
 
@@ -31,20 +29,20 @@ const setupGrid = () => {
   emptyNode(container);
   container.removeAttribute('data-type');
 
-  const grid = game.canvas.grid;
-  if (!grid) {
+  const gridDetails = getCurrentGridDetails();
+  if (!gridDetails) {
     module.logger.debug('No grid, so no grid labels');
     hide();
     return;
   }
   let type: string;
-  if (grid.type === foundry.CONST.GRID_TYPES.SQUARE) {
+  if (isSquare(gridDetails)) {
     type = 'square';
-    setupSquareGridLabels(grid.grid as SquareGrid);
-  } else if (grid.isHex) {
+    setupSquareGridLabels(gridDetails);
+  } else if (isHex(gridDetails)) {
     type = 'hex';
     container.setAttribute('data-type', 'hex');
-    setupHexGridLabels(grid.grid as HexagonalGrid);
+    setupHexGridLabels(gridDetails);
   } else {
     module.logger.debug('Not a square or hex grid, so no grid labels');
     hide();

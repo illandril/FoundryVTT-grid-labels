@@ -1,21 +1,18 @@
 import { getFormatter } from '../utils/formatCell';
+import type { GridDetails } from '../utils/getCurrentGridDetails';
+import getSceneTopLeft from '../utils/getSceneTopLeft';
 import normalizeHex from '../utils/normalizeHex';
+
 import container, { setScale } from './container';
 
-export const repositionHexGrid = (grid: HexagonalGrid) => {
-  const {
-    sceneX,
-    sceneY,
-  } = grid.options.dimensions;
+export const repositionHexGrid = (gridDetails: GridDetails<HexagonalGrid>) => {
+  const { grid, stage } = gridDetails;
   const { cellWidth, cellHeight, numCols, numRows } = normalizeHex(grid);
 
-  const { x, y } = game.canvas.clientCoordinatesFromCanvas({
-    x: sceneX,
-    y: sceneY,
-  });
+  const { x, y } = game.canvas.clientCoordinatesFromCanvas(getSceneTopLeft(gridDetails));
 
-  const scaleX = game.canvas.stage?.scale.x ?? 1;
-  const scaleY = game.canvas.stage?.scale.y ?? 1;
+  const scaleX = stage.scale.x ?? 1;
+  const scaleY = stage.scale.y ?? 1;
 
   const offsetX = grid.columnar ? cellWidth / 6 * scaleX : 0;
   const offsetY = grid.columnar ? 0 : cellHeight / 6 * scaleY;
@@ -31,7 +28,7 @@ export const repositionHexGrid = (grid: HexagonalGrid) => {
   setScale(scaleX, scaleY);
 };
 
-export const setupHexGridLabels = (grid: HexagonalGrid) => {
+export const setupHexGridLabels = ({ grid }: GridDetails<HexagonalGrid>) => {
   const formatter = getFormatter(grid);
   const { numCols, numRows } = normalizeHex(grid);
 

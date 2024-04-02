@@ -6,6 +6,7 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import fs from 'fs-extra';
 import copy from 'rollup-plugin-copy';
 import scss from 'rollup-plugin-scss';
+
 import globals, { description, repositoryURL } from './globals.js';
 
 const target = 'dist';

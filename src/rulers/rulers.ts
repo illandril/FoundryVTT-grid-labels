@@ -1,27 +1,25 @@
 import module from '../module';
 import { onFormatChage } from '../utils/formatCell';
+import getCurrentGridDetails, { isHex, isSquare } from '../utils/getCurrentGridDetails';
+
 import container, { hide, show } from './container';
 import { repositionHexRulers, setupHexRulers } from './hex';
 import './hotkey';
-import './rulers.scss';
 import { repositionSquareRulers, setupSquareRulers } from './square';
 
+import './rulers.scss';
+
 const repositionRulers = foundry.utils.debounce(() => {
-  const grid = game.canvas.grid;
-  if (!grid) {
+  const gridDetails = getCurrentGridDetails();
+  if (!gridDetails) {
     module.logger.debug('No grid so no grid rulers');
     return;
   }
-  const stage = game.canvas.stage;
-  if (!stage) {
-    module.logger.debug('No stage so no grid rulers');
-    return;
-  }
 
-  if (grid.type === foundry.CONST.GRID_TYPES.SQUARE) {
-    repositionSquareRulers(grid.grid as SquareGrid);
-  } else if (grid.isHex) {
-    repositionHexRulers(grid.grid as HexagonalGrid);
+  if (isSquare(gridDetails)) {
+    repositionSquareRulers(gridDetails);
+  } else if (isHex(gridDetails)) {
+    repositionHexRulers(gridDetails);
   }
 }, 1);
 
@@ -29,20 +27,20 @@ const setupRulers = () => {
   hide();
   container.removeAttribute('data-type');
 
-  const grid = game.canvas.grid;
-  if (!grid) {
+  const gridDetails = getCurrentGridDetails();
+  if (!gridDetails) {
     module.logger.debug('No grid, so no rulers');
     hide();
     return;
   }
 
   let type: string;
-  if (grid.type === foundry.CONST.GRID_TYPES.SQUARE) {
+  if (isSquare(gridDetails)) {
     type = 'square';
-    setupSquareRulers(grid.grid as SquareGrid);
-  } else if (grid.isHex) {
+    setupSquareRulers(gridDetails);
+  } else if (isHex(gridDetails)) {
     type = 'hex';
-    setupHexRulers(grid.grid as HexagonalGrid);
+    setupHexRulers(gridDetails);
   } else {
     module.logger.debug('Not a square or hex grid, so no rulers');
     hide();

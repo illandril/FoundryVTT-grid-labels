@@ -1,4 +1,5 @@
 import module from '../module';
+
 import toExcelColumn from './toExcelColumn';
 import toExcelRow from './toExcelRow';
 import zeroPad from './zeroPad';

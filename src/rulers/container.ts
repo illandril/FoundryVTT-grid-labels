@@ -1,4 +1,5 @@
 import module from '../module';
+
 import './rulers.scss';
 
 export const cssRuler = module.cssPrefix.childPrefix('ruler');

@@ -1,5 +1,6 @@
 import { ShowGrid } from './grid/container';
 import { ShowRulers } from './rulers/container';
+
 import { syncShowGrid, syncShowRulers } from './sync';
 
 type Toggle = {

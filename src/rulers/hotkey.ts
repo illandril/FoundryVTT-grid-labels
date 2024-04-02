@@ -1,4 +1,5 @@
 import module from '../module';
+
 import { ShowRulers } from './container';
 
 module.settings.registerKeybinding('toggleRulers',

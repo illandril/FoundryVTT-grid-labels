@@ -1,4 +1,5 @@
 import './grid/grid';
-import './macros';
 import './rulers/rulers';
+
+import './macros';
 import './tooltip';

@@ -1,6 +1,7 @@
 import { ShowGrid } from './grid/container';
-import module from './module';
 import { ShowRulers } from './rulers/container';
+
+import module from './module';
 
 enum SocketType {
   SHOW_GRID = 0,

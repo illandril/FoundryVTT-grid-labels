@@ -1,35 +1,34 @@
 import { getFormatter } from '../utils/formatCell';
+import type { GridDetails } from '../utils/getCurrentGridDetails';
+import getSceneTopLeft from '../utils/getSceneTopLeft';
+
 import { createCells } from './cell';
 import { rulerHorizontal, rulerVertical } from './edges';
 
-export const repositionSquareRulers = (grid: SquareGrid) => {
+export const repositionSquareRulers = (gridDetails: GridDetails<SquareGrid>) => {
+  const { grid, stage } = gridDetails;
   const {
     sceneWidth,
     sceneHeight,
-    sceneX,
-    sceneY,
     size,
   } = grid.options.dimensions;
 
-  const { x, y } = game.canvas.clientCoordinatesFromCanvas({
-    x: sceneX,
-    y: sceneY,
-  });
+  const { x, y } = game.canvas.clientCoordinatesFromCanvas(getSceneTopLeft(gridDetails));
   rulerHorizontal.edge.style.left = `${x}px`;
   rulerVertical.edge.style.top = `${y}px`;
 
-  const scaleX = game.canvas.stage?.scale.x ?? 1;
+  const scaleX = stage.scale.x ?? 1;
   const numCols = Math.ceil(sceneWidth / size);
   const width = scaleX * numCols * size;
   rulerHorizontal.edge.style.width = `${width}px`;
 
-  const scaleY = game.canvas.stage?.scale.y ?? 1;
+  const scaleY = stage.scale.y ?? 1;
   const numRows = Math.ceil(sceneHeight / size);
   const height = scaleY * numRows * size;
   rulerVertical.edge.style.height = `${height}px`;
 };
 
-export const setupSquareRulers = (grid: SquareGrid) => {
+export const setupSquareRulers = ({ grid }: GridDetails<SquareGrid>) => {
   const formatter = getFormatter(grid);
   const {
     sceneWidth,

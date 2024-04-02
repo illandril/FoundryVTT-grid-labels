@@ -1,5 +1,6 @@
 import module from '../module';
 import emptyNode from '../utils/emptyNode';
+
 import { cssRuler } from './container';
 
 const overlayClass = cssRuler.child('overlay');

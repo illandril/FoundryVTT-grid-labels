@@ -1,4 +1,5 @@
 import module from '../module';
+
 import { ShowGrid } from './container';
 
 module.settings.registerKeybinding('toggleGrid',

@@ -1,14 +1,13 @@
 import { getFormatter } from '../utils/formatCell';
+import type { GridDetails } from '../utils/getCurrentGridDetails';
+import getSceneTopLeft from '../utils/getSceneTopLeft';
 import normalizeHex from '../utils/normalizeHex';
+
 import { createCells } from './cell';
 import { rulerHorizontal, rulerVertical } from './edges';
 
-export const repositionHexRulers = (grid: HexagonalGrid) => {
-  const {
-    sceneX,
-    sceneY,
-  } = grid.options.dimensions;
-
+export const repositionHexRulers = (gridDetails: GridDetails<HexagonalGrid>) => {
+  const { grid, stage } = gridDetails;
   const {
     cellHeight,
     cellWidth,
@@ -16,13 +15,10 @@ export const repositionHexRulers = (grid: HexagonalGrid) => {
     numRows,
   } = normalizeHex(grid);
 
-  const { x, y } = game.canvas.clientCoordinatesFromCanvas({
-    x: sceneX,
-    y: sceneY,
-  });
+  const { x, y } = game.canvas.clientCoordinatesFromCanvas(getSceneTopLeft(gridDetails));
 
-  const scaleX = game.canvas.stage?.scale.x ?? 1;
-  const scaleY = game.canvas.stage?.scale.y ?? 1;
+  const scaleX = stage.scale.x ?? 1;
+  const scaleY = stage.scale.y ?? 1;
   const offsetX = (grid.columnar ? cellWidth / 6 : -cellWidth / 4) * scaleX;
   const offsetY = (grid.columnar ? -cellHeight / 4 : cellHeight / 6) * scaleY;
 
@@ -36,7 +32,7 @@ export const repositionHexRulers = (grid: HexagonalGrid) => {
   rulerVertical.edge.style.height = `${height}px`;
 };
 
-export const setupHexRulers = (grid: HexagonalGrid) => {
+export const setupHexRulers = ({ grid }: GridDetails<HexagonalGrid>) => {
   const formatter = getFormatter(grid);
   const {
     numCols,
