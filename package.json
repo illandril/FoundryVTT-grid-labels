@@ -1,6 +1,6 @@
 {
   "name": "@illandril/foundryvtt-grid-labels",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Illandril's Grid Labels: Adds labels to the scene grid.",
   "type": "module",
   "scripts": {
