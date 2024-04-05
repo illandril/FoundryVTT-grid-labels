@@ -1,4 +1,4 @@
-import { getFormatter } from '../utils/formatCell';
+import formatCell from '../utils/formatCell';
 import type { GridDetails } from '../utils/getCurrentGridDetails';
 import getSceneTopLeft from '../utils/getSceneTopLeft';
 
@@ -30,9 +30,8 @@ export const repositionSquareGrid = (gridDetails: GridDetails<SquareGrid>) => {
   setScale(scaleX, scaleY);
 };
 
-export const setupSquareGridLabels = ({ grid }: GridDetails<SquareGrid>) => {
-  const formatter = getFormatter(grid);
-  const dimensions = grid.options.dimensions;
+export const setupSquareGridLabels = (gridDetails: GridDetails<SquareGrid>) => {
+  const dimensions = gridDetails.grid.options.dimensions;
   const { x: paddingX, y: paddingY, width: sceneWidth, height: sceneHeight } = dimensions.sceneRect;
   const size = dimensions.size;
   const numCols = Math.ceil(sceneWidth / size);
@@ -47,7 +46,7 @@ export const setupSquareGridLabels = ({ grid }: GridDetails<SquareGrid>) => {
   for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
     for (let colIndex = 0; colIndex < numCols; colIndex++) {
       const textElem = document.createElement('div');
-      textElem.appendChild(document.createTextNode(formatter.formatCell(colIndex, rowIndex)));
+      textElem.appendChild(document.createTextNode(formatCell(gridDetails, colIndex, rowIndex)));
       container.appendChild(textElem);
     }
   }

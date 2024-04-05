@@ -1,5 +1,6 @@
 import module from '../module';
 
+import type { GridDetails } from './getCurrentGridDetails';
 import toExcelColumn from './toExcelColumn';
 import toExcelRow from './toExcelRow';
 import zeroPad from './zeroPad';
@@ -17,6 +18,9 @@ export const onFormatChage = (callback: () => void) => {
 const onChange = () => {
   Hooks.callAll(`${module.id}.formatChange`);
 };
+Hooks.on('updateScene', () => {
+  onChange();
+});
 
 enum Separator {
   none = '',
@@ -34,7 +38,10 @@ enum Separator {
 
 const separatorChoices = Object.keys(Separator) as (keyof typeof Separator)[];
 const separatorChoiceMap = Object.fromEntries(
-  separatorChoices.map((choice) => [choice, () => module.localize(`setting.format.separatorChoice.${choice}`)] as const),
+  separatorChoices.map((choice) => [
+    choice,
+    () => module.localize(`setting.format.separatorChoice.${choice}`),
+  ] as const),
 ) as Record<keyof typeof Separator, () => string>;
 
 const choices = [
@@ -45,7 +52,10 @@ const choices = [
   'zero4',
 ] as const;
 const choicesMap = Object.fromEntries(
-  choices.map((choice) => [choice, () => module.localize(`setting.format.formatChoice.${choice}`)] as const),
+  choices.map((choice) => [
+    choice,
+    () => module.localize(`setting.format.formatChoice.${choice}`),
+  ] as const),
 ) as Record<typeof choices[number], () => string>;
 
 class Format {
@@ -87,7 +97,7 @@ class Format {
     return formatRowOrCol(index, this.row.get());
   }
 
-  formatCell(columnIndex: number, rowIndex: number) {
+  _formatCell(columnIndex: number, rowIndex: number) {
     const col = this.formatColumn(columnIndex);
     const row = this.formatRow(rowIndex);
     let a: string;
@@ -106,6 +116,20 @@ class Format {
 const square = new Format('square');
 const hex = new Format('hex');
 
+const hexVariantChoices = [
+  'offset',
+  'doubled',
+  'axial',
+] as const;
+type HexVariant = typeof hexVariantChoices[number];
+
+const HexVariant = module.settings.register<HexVariant>(`format.hex.variant`, String, 'offset', {
+  scope: 'world',
+  hasHint: true,
+  onChange,
+  choices: hexVariantChoices,
+});
+
 const formatRowOrCol = (index: number, style: typeof choices[number]) => {
   if (style === 'letter') {
     return toExcelColumn(index);
@@ -117,12 +141,89 @@ const formatRowOrCol = (index: number, style: typeof choices[number]) => {
 };
 
 export const getFormatter = (grid: BaseGrid) => {
-  if (grid instanceof SquareGrid) {
-    return square;
-  }
   if (grid instanceof HexagonalGrid) {
     return hex;
   }
-  module.logger.error('Unexpected grid type - falling back to square grid formatting', grid);
   return square;
 };
+
+const doubledIndexes = (grid: HexagonalGrid, columnIndex: number, rowIndex: number) => {
+  const [a, b] = grid.columnar ? [rowIndex, columnIndex] : [columnIndex, rowIndex];
+  let offset = b % 2;
+  if (grid.even) {
+    offset = 1 - offset;
+  }
+  const offsetA = a * 2 + offset;
+  return grid.columnar ? [b, offsetA] : [offsetA, b];
+};
+
+export const getRulerModifiers = ({ grid, scene }: GridDetails<SquareGrid>) => {
+  const modifiers = {
+    column: {
+      multiplier: 1,
+      offset: getOffset(scene, 'col'),
+    },
+    row: {
+      multiplier: 1,
+      offset: getOffset(scene, 'row'),
+    },
+  };
+  if (grid instanceof HexagonalGrid) {
+    const variant = HexVariant.get();
+    if (variant === 'doubled') {
+      if (grid.columnar) {
+        modifiers.row.multiplier = 2;
+      } else {
+        modifiers.column.multiplier = 2;
+      }
+    } else if (variant === 'axial') {
+      modifiers.column.multiplier = 0;
+      modifiers.row.multiplier = 0;
+    }
+  }
+  return modifiers;
+};
+
+const getOffset = (scene: Scene, type: 'col' | 'row') => {
+  const offset = scene.getFlag(module.id, `${type}Offset`);
+  if (typeof offset === 'number') {
+    return offset;
+  }
+  if (typeof offset === 'string') {
+    return parseInt(offset, 10) || 0;
+  }
+  return 0;
+};
+
+const formatCell = ({ grid, scene }: GridDetails<SquareGrid>, rawColumnIndex: number, rawRowIndex: number) => {
+  let columnIndex = rawColumnIndex;
+  let rowIndex = rawRowIndex;
+  let formatter: Format;
+  if (grid instanceof HexagonalGrid) {
+    formatter = hex;
+    const variant = HexVariant.get();
+    if (variant === 'doubled') {
+      [columnIndex, rowIndex] = doubledIndexes(grid, columnIndex, rowIndex);
+      columnIndex += getOffset(scene, 'col');
+      rowIndex += getOffset(scene, 'row');
+    } else if (variant === 'axial') {
+      columnIndex += getOffset(scene, 'col');
+      rowIndex += getOffset(scene, 'row');
+      if (grid.columnar) {
+        rowIndex = rowIndex - (columnIndex + (grid.even ? 1 : -1) * Math.abs(columnIndex) % 2) / 2;
+      } else {
+        columnIndex = columnIndex - (rowIndex + (grid.even ? -1 : 1) * Math.abs(rowIndex) % 2) / 2;
+      }
+    } else {
+      columnIndex += getOffset(scene, 'col');
+      rowIndex += getOffset(scene, 'row');
+    }
+  } else {
+    columnIndex += getOffset(scene, 'col');
+    rowIndex += getOffset(scene, 'row');
+    formatter = square;
+  }
+  return formatter._formatCell(columnIndex, rowIndex);
+};
+
+export default formatCell;

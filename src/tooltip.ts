@@ -1,4 +1,4 @@
-import { getFormatter } from './utils/formatCell';
+import formatCell from './utils/formatCell';
 import getCurrentGridDetails, { isHex, isSquare } from './utils/getCurrentGridDetails';
 import getSceneTopLeft from './utils/getSceneTopLeft';
 
@@ -95,7 +95,7 @@ Hooks.once('ready', () => {
     const topLeft = getSceneTopLeft(gridDetails);
     const [row, col] = gridDetails.grid.getGridPositionFromPixels(coordinate.x - topLeft.x, coordinate.y - topLeft.y);
 
-    tooltip.textContent = getFormatter(gridDetails.grid).formatCell(col, row);
+    tooltip.textContent = formatCell(gridDetails, col, row);
     container.style.left = `${x}px`;
     container.style.top = `${y}px`;
   });

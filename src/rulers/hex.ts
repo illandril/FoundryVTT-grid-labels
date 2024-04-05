@@ -1,4 +1,4 @@
-import { getFormatter } from '../utils/formatCell';
+import { getFormatter, getRulerModifiers } from '../utils/formatCell';
 import type { GridDetails } from '../utils/getCurrentGridDetails';
 import getSceneTopLeft from '../utils/getSceneTopLeft';
 import normalizeHex from '../utils/normalizeHex';
@@ -32,13 +32,14 @@ export const repositionHexRulers = (gridDetails: GridDetails<HexagonalGrid>) => 
   rulerVertical.edge.style.height = `${height}px`;
 };
 
-export const setupHexRulers = ({ grid }: GridDetails<HexagonalGrid>) => {
-  const formatter = getFormatter(grid);
+export const setupHexRulers = (gridDetails: GridDetails<HexagonalGrid>) => {
+  const modifiers = getRulerModifiers(gridDetails);
+  const formatter = getFormatter(gridDetails.grid);
   const {
     numCols,
     numRows,
-  } = normalizeHex(grid);
+  } = normalizeHex(gridDetails.grid);
 
-  createCells(rulerHorizontal, numCols, (index) => formatter.formatColumn(index));
-  createCells(rulerVertical, numRows, (index) => formatter.formatRow(index));
+  createCells(rulerHorizontal, numCols * modifiers.column.multiplier, (index) => formatter.formatColumn(index + modifiers.column.offset));
+  createCells(rulerVertical, numRows * modifiers.row.multiplier, (index) => formatter.formatRow(index + modifiers.row.offset));
 };

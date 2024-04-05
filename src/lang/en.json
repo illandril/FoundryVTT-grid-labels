@@ -200,6 +200,15 @@
           "columnFirst": {
             "label": "Hex: Columns First",
             "hint": "If enabled, the column value will be shown before the row value for hex Grids"
+          },
+          "variant": {
+            "label": "Hex: Variant",
+            "hint": "The coordinate system style to use for hex grid labels. Offset will have labels for the pointy direction follow a zig-zag pattern. Doubled will have labels for the pointy direction follow an alternating pattern, with each flat direction row or column having only even or odd values. For Axial, columns will follow two different 'axes' (top to bottom and top-left to bottom-right for columns, top-left to bottom-right and left to right for rows). Note: the Axial variant will not show rulers.",
+            "choice": {
+              "offset": "Offset (zig-zag, staggered)",
+              "doubled": "Doubled (straight, interlaced)",
+              "axial": "Axial (trapezoidal, oblique, skewed, flattened 3d)"
+            }
           }
         }
       }

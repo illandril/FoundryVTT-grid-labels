@@ -1,4 +1,4 @@
-import { getFormatter } from '../utils/formatCell';
+import { getFormatter, getRulerModifiers } from '../utils/formatCell';
 import type { GridDetails } from '../utils/getCurrentGridDetails';
 import getSceneTopLeft from '../utils/getSceneTopLeft';
 
@@ -28,17 +28,18 @@ export const repositionSquareRulers = (gridDetails: GridDetails<SquareGrid>) => 
   rulerVertical.edge.style.height = `${height}px`;
 };
 
-export const setupSquareRulers = ({ grid }: GridDetails<SquareGrid>) => {
-  const formatter = getFormatter(grid);
+export const setupSquareRulers = (gridDetails: GridDetails<SquareGrid>) => {
+  const modifiers = getRulerModifiers(gridDetails);
+  const formatter = getFormatter(gridDetails.grid);
   const {
     sceneWidth,
     sceneHeight,
     size,
-  } = grid.options.dimensions;
+  } = gridDetails.grid.options.dimensions;
 
   const numCols = Math.ceil(sceneWidth / size);
-  createCells(rulerHorizontal, numCols, (index) => formatter.formatColumn(index));
+  createCells(rulerHorizontal, numCols * modifiers.column.multiplier, (index) => formatter.formatColumn(index + modifiers.column.offset));
 
   const numRows = Math.ceil(sceneHeight / size);
-  createCells(rulerVertical, numRows, (index) => formatter.formatRow(index));
+  createCells(rulerVertical, numRows * modifiers.row.multiplier, (index) => formatter.formatRow(index + modifiers.row.offset));
 };

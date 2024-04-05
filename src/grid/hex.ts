@@ -1,4 +1,4 @@
-import { getFormatter } from '../utils/formatCell';
+import formatCell from '../utils/formatCell';
 import type { GridDetails } from '../utils/getCurrentGridDetails';
 import getSceneTopLeft from '../utils/getSceneTopLeft';
 import normalizeHex from '../utils/normalizeHex';
@@ -28,8 +28,8 @@ export const repositionHexGrid = (gridDetails: GridDetails<HexagonalGrid>) => {
   setScale(scaleX, scaleY);
 };
 
-export const setupHexGridLabels = ({ grid }: GridDetails<HexagonalGrid>) => {
-  const formatter = getFormatter(grid);
+export const setupHexGridLabels = (gridDetails: GridDetails<HexagonalGrid>) => {
+  const grid = gridDetails.grid;
   const { numCols, numRows } = normalizeHex(grid);
 
   container.style.gridTemplateRows = `repeat(${numRows}, 1fr)`;
@@ -40,7 +40,7 @@ export const setupHexGridLabels = ({ grid }: GridDetails<HexagonalGrid>) => {
       const textElem = document.createElement('div');
       textElem.setAttribute('data-offset', `${isOffset}`);
       textElem.setAttribute('data-columnar', `${grid.columnar}`);
-      textElem.appendChild(document.createTextNode(formatter.formatCell(colIndex, rowIndex)));
+      textElem.appendChild(document.createTextNode(formatCell(gridDetails, colIndex, rowIndex)));
       container.appendChild(textElem);
     }
   }
