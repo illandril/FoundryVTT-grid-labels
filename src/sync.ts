@@ -3,7 +3,7 @@ import { ShowRulers } from './rulers/container';
 
 import module from './module';
 
-enum SocketType {
+export enum SocketType {
   ShowGrid = 0,
   ShowRulers = 1,
 }

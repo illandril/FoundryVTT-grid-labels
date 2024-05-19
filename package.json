@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/illandril/FoundryVTT-grid-labels#readme",
   "dependencies": {
-    "@illandril/foundryvtt-utils": "^10.0.1"
+    "@illandril/foundryvtt-utils": "^10.0.3"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.24.1",
