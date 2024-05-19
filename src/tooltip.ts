@@ -16,7 +16,8 @@ const ShowTooltipsOnHotkey = module.settings.register('showTooltipsOnHotkey', Bo
   hasHint: true,
 });
 
-module.settings.registerKeybinding('tooltip',
+module.settings.registerKeybinding(
+  'tooltip',
   () => {
     if (ShowTooltipsOnHotkey.get()) {
       tooltip.ariaHidden = 'false';
@@ -29,7 +30,8 @@ module.settings.registerKeybinding('tooltip',
   },
   {
     hasHint: true,
-  });
+  },
+);
 
 Hooks.once('ready', () => {
   tooltip.ariaHidden = ShowTooltipsOnHotkey.get() ? 'true' : 'false';
@@ -84,7 +86,7 @@ Hooks.once('ready', () => {
       module.logger.debug('No grid so no grid tooltips');
       return;
     }
-    if (!isSquare(gridDetails) && !isHex(gridDetails)) {
+    if (!(isSquare(gridDetails) || isHex(gridDetails))) {
       module.logger.debug('Not a square or hex grid, so no tooltips');
       return;
     }

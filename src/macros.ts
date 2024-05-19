@@ -4,18 +4,23 @@ import { ShowRulers } from './rulers/container';
 import { syncShowGrid, syncShowRulers } from './sync';
 
 type Toggle = {
-  show: (all: boolean) => void
-  hide: (all: boolean) => void
-  toggle: (all: boolean) => void
+  show: (all?: boolean) => void;
+  hide: (all?: boolean) => void;
+  toggle: (all?: boolean) => void;
 };
-const external = window as {
-  illandril?: {
-    gridLabels: Toggle & {
-      grid: Toggle
-      rulers: Toggle
-    }
+
+declare global {
+  interface Window {
+    illandril?: {
+      gridLabels: Toggle & {
+        grid: Toggle;
+        rulers: Toggle;
+      };
+    };
   }
-};
+}
+
+const external = window;
 
 external.illandril = {
   ...(() => {
@@ -30,7 +35,7 @@ external.illandril = {
           sync(all);
         },
         toggle: (all) => {
-          setting.set(!ShowGrid.get());
+          setting.set(!setting.get());
           sync(all);
         },
       };

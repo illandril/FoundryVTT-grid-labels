@@ -14,8 +14,8 @@ export const repositionHexGrid = (gridDetails: GridDetails<HexagonalGrid>) => {
   const scaleX = stage.scale.x ?? 1;
   const scaleY = stage.scale.y ?? 1;
 
-  const offsetX = grid.columnar ? cellWidth / 6 * scaleX : 0;
-  const offsetY = grid.columnar ? 0 : cellHeight / 6 * scaleY;
+  const offsetX = grid.columnar ? (cellWidth / 6) * scaleX : 0;
+  const offsetY = grid.columnar ? 0 : (cellHeight / 6) * scaleY;
   container.style.left = `${x + offsetX}px`;
   container.style.top = `${y + offsetY}px`;
 

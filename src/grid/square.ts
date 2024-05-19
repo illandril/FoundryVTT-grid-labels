@@ -6,11 +6,7 @@ import container, { setScale } from './container';
 
 export const repositionSquareGrid = (gridDetails: GridDetails<SquareGrid>) => {
   const { grid, stage } = gridDetails;
-  const {
-    sceneWidth,
-    sceneHeight,
-    size,
-  } = grid.options.dimensions;
+  const { sceneWidth, sceneHeight, size } = grid.options.dimensions;
 
   const { x, y } = game.canvas.clientCoordinatesFromCanvas(getSceneTopLeft(gridDetails));
 

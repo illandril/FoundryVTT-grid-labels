@@ -7,7 +7,7 @@ import zeroPad from './zeroPad';
 
 declare global {
   interface HookCallbacks {
-    'illandril-grid-labels.formatChange': () => void
+    'illandril-grid-labels.formatChange': () => void;
   }
 }
 
@@ -23,40 +23,41 @@ Hooks.on('updateScene', () => {
 });
 
 enum Separator {
+  // biome-ignore lint/style/useNamingConvention: Legacy
   none = '',
+  // biome-ignore lint/style/useNamingConvention: Legacy
   space = ' ',
+  // biome-ignore lint/style/useNamingConvention: Legacy
   comma = ',',
+  // biome-ignore lint/style/useNamingConvention: Legacy
   commaSpace = ', ',
+  // biome-ignore lint/style/useNamingConvention: Legacy
   period = '.',
+  // biome-ignore lint/style/useNamingConvention: Legacy
   periodSpace = '. ',
+  // biome-ignore lint/style/useNamingConvention: Legacy
   slash = '/',
+  // biome-ignore lint/style/useNamingConvention: Legacy
   spaceSlashSpace = ' / ',
+  // biome-ignore lint/style/useNamingConvention: Legacy
   pipe = '|',
+  // biome-ignore lint/style/useNamingConvention: Legacy
   spacePipeSpace = ' | ',
+  // biome-ignore lint/style/useNamingConvention: Legacy
   newline = '\n',
 }
 
 const separatorChoices = Object.keys(Separator) as (keyof typeof Separator)[];
 const separatorChoiceMap = Object.fromEntries(
-  separatorChoices.map((choice) => [
-    choice,
-    () => module.localize(`setting.format.separatorChoice.${choice}`),
-  ] as const),
+  separatorChoices.map(
+    (choice) => [choice, () => module.localize(`setting.format.separatorChoice.${choice}`)] as const,
+  ),
 ) as Record<keyof typeof Separator, () => string>;
 
-const choices = [
-  'letter',
-  'number',
-  'zero2',
-  'zero3',
-  'zero4',
-] as const;
+const choices = ['letter', 'number', 'zero2', 'zero3', 'zero4'] as const;
 const choicesMap = Object.fromEntries(
-  choices.map((choice) => [
-    choice,
-    () => module.localize(`setting.format.formatChoice.${choice}`),
-  ] as const),
-) as Record<typeof choices[number], () => string>;
+  choices.map((choice) => [choice, () => module.localize(`setting.format.formatChoice.${choice}`)] as const),
+) as Record<(typeof choices)[number], () => string>;
 
 class Format {
   private readonly column;
@@ -69,24 +70,29 @@ class Format {
       hasHint: true,
       onChange,
     });
-    this.column = module.settings.register<typeof choices[number]>(`format.${type}.column`, String, 'letter', {
+    this.column = module.settings.register<(typeof choices)[number]>(`format.${type}.column`, String, 'letter', {
       scope: 'world',
       hasHint: true,
       onChange,
       choices: choicesMap,
     });
-    this.row = module.settings.register<typeof choices[number]>(`format.${type}.row`, String, 'number', {
+    this.row = module.settings.register<(typeof choices)[number]>(`format.${type}.row`, String, 'number', {
       scope: 'world',
       hasHint: true,
       onChange,
       choices: choicesMap,
     });
-    this.separator = module.settings.register<typeof separatorChoices[number]>(`format.${type}.separator`, String, 'none', {
-      scope: 'world',
-      hasHint: true,
-      onChange,
-      choices: separatorChoiceMap,
-    });
+    this.separator = module.settings.register<(typeof separatorChoices)[number]>(
+      `format.${type}.separator`,
+      String,
+      'none',
+      {
+        scope: 'world',
+        hasHint: true,
+        onChange,
+        choices: separatorChoiceMap,
+      },
+    );
   }
 
   formatColumn(index: number) {
@@ -116,26 +122,22 @@ class Format {
 const square = new Format('square');
 const hex = new Format('hex');
 
-const hexVariantChoices = [
-  'offset',
-  'doubled',
-  'axial',
-] as const;
-type HexVariant = typeof hexVariantChoices[number];
+const hexVariantChoices = ['offset', 'doubled', 'axial'] as const;
+type HexVariant = (typeof hexVariantChoices)[number];
 
-const HexVariant = module.settings.register<HexVariant>(`format.hex.variant`, String, 'offset', {
+const HexVariant = module.settings.register<HexVariant>('format.hex.variant', String, 'offset', {
   scope: 'world',
   hasHint: true,
   onChange,
   choices: hexVariantChoices,
 });
 
-const formatRowOrCol = (index: number, style: typeof choices[number]) => {
+const formatRowOrCol = (index: number, style: (typeof choices)[number]) => {
   if (style === 'letter') {
     return toExcelColumn(index);
   }
   if (style.startsWith('zero')) {
-    return zeroPad(index, parseInt(style.substring(4), 10));
+    return zeroPad(index, Number.parseInt(style.substring(4), 10));
   }
   return toExcelRow(index);
 };
@@ -190,11 +192,12 @@ const getOffset = (scene: Scene, type: 'col' | 'row') => {
     return offset;
   }
   if (typeof offset === 'string') {
-    return parseInt(offset, 10) || 0;
+    return Number.parseInt(offset, 10) || 0;
   }
   return 0;
 };
 
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Legacy
 const formatCell = ({ grid, scene }: GridDetails<SquareGrid>, rawColumnIndex: number, rawRowIndex: number) => {
   let columnIndex = rawColumnIndex;
   let rowIndex = rawRowIndex;
@@ -210,9 +213,9 @@ const formatCell = ({ grid, scene }: GridDetails<SquareGrid>, rawColumnIndex: nu
       columnIndex += getOffset(scene, 'col');
       rowIndex += getOffset(scene, 'row');
       if (grid.columnar) {
-        rowIndex = rowIndex - (columnIndex + (grid.even ? 1 : -1) * Math.abs(columnIndex) % 2) / 2;
+        rowIndex = rowIndex - (columnIndex + (((grid.even ? 1 : -1) * Math.abs(columnIndex)) % 2)) / 2;
       } else {
-        columnIndex = columnIndex - (rowIndex + (grid.even ? -1 : 1) * Math.abs(rowIndex) % 2) / 2;
+        columnIndex = columnIndex - (rowIndex + (((grid.even ? -1 : 1) * Math.abs(rowIndex)) % 2)) / 2;
       }
     } else {
       columnIndex += getOffset(scene, 'col');

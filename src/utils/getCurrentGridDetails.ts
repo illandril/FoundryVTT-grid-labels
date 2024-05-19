@@ -1,10 +1,10 @@
 import module from '../module';
 
 export type GridDetails<T extends BaseGrid = BaseGrid> = {
-  gridLayer: GridLayer
-  grid: T
-  stage: NonNullable<Canvas['stage']>
-  scene: Scene
+  gridLayer: GridLayer;
+  grid: T;
+  stage: NonNullable<Canvas['stage']>;
+  scene: Scene;
 };
 
 export const isSquare = (gridDetails: GridDetails<BaseGrid>): gridDetails is GridDetails<SquareGrid> => {
@@ -20,7 +20,7 @@ const getCurrentGridDetails = (): GridDetails<BaseGrid> | null => {
   const grid = gridLayer?.grid;
   const stage = game.canvas.stage;
   const scene = game.canvas.scene;
-  if (!grid || !stage || !scene) {
+  if (!(grid && stage && scene)) {
     module.logger.debug('No grid, stage, and/or scene', !!grid, !!stage, !!scene, game.canvas);
     return null;
   }

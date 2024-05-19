@@ -23,7 +23,8 @@ Hooks.once('ready', () => {
 
   const fixSize = () => {
     const activeTool = document.querySelector('.control-tool.active');
-    const left = Math.ceil(activeTool?.getBoundingClientRect()?.right ?? uiMiddle?.getBoundingClientRect().left ?? 0) + 8;
+    const left =
+      Math.ceil(activeTool?.getBoundingClientRect()?.right ?? uiMiddle?.getBoundingClientRect().left ?? 0) + 8;
     const right = Math.ceil(Math.max(window.innerWidth - (uiMiddle?.getBoundingClientRect().right ?? 0), 0)) + 8;
     const top = Math.ceil(uiTop?.getBoundingClientRect().height ?? 0) + 8;
     const bottom = Math.ceil(uiBottom?.getBoundingClientRect().height ?? 0) + 8;

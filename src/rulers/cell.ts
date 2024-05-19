@@ -20,7 +20,11 @@ const createCell = () => {
   return cell;
 };
 
-export const createCells = ({ edge }: { edge: HTMLDivElement }, numCells: number, createLabel: (cell: number) => string) => {
+export const createCells = (
+  { edge }: { edge: HTMLDivElement },
+  numCells: number,
+  createLabel: (cell: number) => string,
+) => {
   for (let row = 0; row < numCells; row++) {
     let cell = edge.children[row];
     if (!cell) {
@@ -37,6 +41,7 @@ export const createCells = ({ edge }: { edge: HTMLDivElement }, numCells: number
   }
 
   while (edge.children.length > numCells) {
+    // biome-ignore lint/style/noNonNullAssertion: If length > numCells, we know there will be a lastChild
     edge.removeChild(edge.lastChild!);
   }
 };

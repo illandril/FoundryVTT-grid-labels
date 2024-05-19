@@ -8,12 +8,7 @@ import { rulerHorizontal, rulerVertical } from './edges';
 
 export const repositionHexRulers = (gridDetails: GridDetails<HexagonalGrid>) => {
   const { grid, stage } = gridDetails;
-  const {
-    cellHeight,
-    cellWidth,
-    numCols,
-    numRows,
-  } = normalizeHex(grid);
+  const { cellHeight, cellWidth, numCols, numRows } = normalizeHex(grid);
 
   const { x, y } = game.canvas.clientCoordinatesFromCanvas(getSceneTopLeft(gridDetails));
 
@@ -35,11 +30,12 @@ export const repositionHexRulers = (gridDetails: GridDetails<HexagonalGrid>) => 
 export const setupHexRulers = (gridDetails: GridDetails<HexagonalGrid>) => {
   const modifiers = getRulerModifiers(gridDetails);
   const formatter = getFormatter(gridDetails.grid);
-  const {
-    numCols,
-    numRows,
-  } = normalizeHex(gridDetails.grid);
+  const { numCols, numRows } = normalizeHex(gridDetails.grid);
 
-  createCells(rulerHorizontal, numCols * modifiers.column.multiplier, (index) => formatter.formatColumn(index + modifiers.column.offset));
-  createCells(rulerVertical, numRows * modifiers.row.multiplier, (index) => formatter.formatRow(index + modifiers.row.offset));
+  createCells(rulerHorizontal, numCols * modifiers.column.multiplier, (index) =>
+    formatter.formatColumn(index + modifiers.column.offset),
+  );
+  createCells(rulerVertical, numRows * modifiers.row.multiplier, (index) =>
+    formatter.formatRow(index + modifiers.row.offset),
+  );
 };

@@ -7,7 +7,7 @@ export const cssRuler = module.cssPrefix.childPrefix('ruler');
 const container = document.createElement('div');
 container.classList.add(cssRuler.child('container'));
 
-let visible: boolean = false;
+let visible = false;
 export const hide = () => {
   visible = false;
   resetAriaHidden();

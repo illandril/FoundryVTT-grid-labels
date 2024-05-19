@@ -5,7 +5,7 @@ const cssGrid = module.cssPrefix.childPrefix('grid');
 const container = document.createElement('div');
 container.classList.add(cssGrid.child('container'));
 
-let visible: boolean = false;
+let visible = false;
 
 export const hide = () => {
   visible = false;
