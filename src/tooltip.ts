@@ -16,26 +16,20 @@ const ShowTooltipsOnHotkey = module.settings.register('showTooltipsOnHotkey', Bo
   hasHint: true,
 });
 
+let hotkeyDown = false;
+
 module.settings.registerKeybinding(
   'tooltip',
   () => {
-    if (ShowTooltipsOnHotkey.get()) {
-      tooltip.ariaHidden = 'false';
-    }
+    hotkeyDown = true;
   },
   () => {
-    if (ShowTooltipsOnHotkey.get()) {
-      tooltip.ariaHidden = 'true';
-    }
+    hotkeyDown = false;
   },
   {
     hasHint: true,
   },
 );
-
-Hooks.once('ready', () => {
-  tooltip.ariaHidden = ShowTooltipsOnHotkey.get() ? 'true' : 'false';
-});
 
 const tooltip = document.createElement('div');
 tooltip.classList.add(module.cssPrefix.child('tooltip'));
@@ -56,9 +50,13 @@ module.settings.register('tooltipFontSize', Number, 1, {
 });
 
 Hooks.on('renderTokenHUD', () => {
-  if (!ShowTooltipsOnHotkey.get()) {
-    tooltip.ariaHidden = 'true';
-  }
+  tooltip.ariaHidden = 'true';
+});
+Hooks.on('renderTileHUD', () => {
+  tooltip.ariaHidden = 'true';
+});
+Hooks.on('renderDrawingHUD', () => {
+  tooltip.ariaHidden = 'true';
 });
 
 Hooks.once('ready', () => {
@@ -67,29 +65,31 @@ Hooks.once('ready', () => {
     module.logger.error('Tooltip initialization failed: no #board element found');
     return;
   }
+
   board.addEventListener('mouseleave', () => {
-    if (!ShowTooltipsOnHotkey.get()) {
-      tooltip.ariaHidden = 'true';
-    }
+    tooltip.ariaHidden = 'true';
   });
-  board.addEventListener('mouseenter', () => {
-    if (!ShowTooltipsOnHotkey.get()) {
-      tooltip.ariaHidden = 'false';
-    }
-  });
+
   board.addEventListener('mousemove', (event) => {
+    if (ShowTooltipsOnHotkey.get() && !hotkeyDown) {
+      tooltip.ariaHidden = 'true';
+      return;
+    }
+
     const tooltipPosition = TooltipPosition.get();
     container.setAttribute('data-position', tooltipPosition);
-    // tooltip.ariaHidden = 'false';
     const gridDetails = getCurrentGridDetails();
     if (!gridDetails) {
       module.logger.debug('No grid so no grid tooltips');
+      tooltip.ariaHidden = 'true';
       return;
     }
     if (!(isSquare(gridDetails) || isHex(gridDetails))) {
       module.logger.debug('Not a square or hex grid, so no tooltips');
+      tooltip.ariaHidden = 'true';
       return;
     }
+    tooltip.ariaHidden = 'false';
 
     const x = event.clientX;
     const y = event.clientY;

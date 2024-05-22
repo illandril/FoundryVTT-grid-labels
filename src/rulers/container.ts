@@ -22,7 +22,7 @@ const resetAriaHidden = () => {
   container.ariaHidden = visible && ShowRulers.get() ? 'false' : 'true';
 };
 
-export const ShowRulers = module.settings.register('showRulers', Boolean, true, {
+export const ShowRulers = module.settings.register('showRulers', Boolean, false, {
   scope: 'client',
   hasHint: true,
   onChange: resetAriaHidden,
