@@ -1,7 +1,7 @@
 import type { GridDetails } from './getCurrentGridDetails';
 
-const getSceneTopLeft = ({ grid, scene }: GridDetails) => {
-  const { sceneX, sceneY } = grid.options.dimensions;
+const getSceneTopLeft = ({ scene, dimensions }: GridDetails) => {
+  const { sceneX, sceneY } = dimensions;
 
   return {
     x: sceneX + scene.background.offsetX,

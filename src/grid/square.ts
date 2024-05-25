@@ -4,21 +4,20 @@ import getSceneTopLeft from '../utils/getSceneTopLeft';
 
 import container, { setScale } from './container';
 
-export const repositionSquareGrid = (gridDetails: GridDetails<SquareGrid>) => {
-  const { grid, stage } = gridDetails;
-  const { sceneWidth, sceneHeight, size } = grid.options.dimensions;
+export const repositionSquareGrid = (gridDetails: GridDetails<foundry.grid.SquareGrid>) => {
+  const { sceneWidth, sceneHeight, size } = gridDetails.dimensions;
 
   const { x, y } = game.canvas.clientCoordinatesFromCanvas(getSceneTopLeft(gridDetails));
 
   container.style.left = `${x}px`;
   container.style.top = `${y}px`;
 
-  const scaleX = stage.scale.x ?? 1;
+  const scaleX = gridDetails.stage.scale.x ?? 1;
   const numRows = Math.ceil(sceneWidth / size);
   const width = scaleX * numRows * size;
   container.style.width = `${width}px`;
 
-  const scaleY = stage.scale.y ?? 1;
+  const scaleY = gridDetails.stage.scale.y ?? 1;
   const numCols = Math.ceil(sceneHeight / size);
   const height = scaleY * numCols * size;
   container.style.height = `${height}px`;
@@ -26,8 +25,8 @@ export const repositionSquareGrid = (gridDetails: GridDetails<SquareGrid>) => {
   setScale(scaleX, scaleY);
 };
 
-export const setupSquareGridLabels = (gridDetails: GridDetails<SquareGrid>) => {
-  const dimensions = gridDetails.grid.options.dimensions;
+export const setupSquareGridLabels = (gridDetails: GridDetails<foundry.grid.SquareGrid>) => {
+  const dimensions = gridDetails.dimensions;
   const { x: paddingX, y: paddingY, width: sceneWidth, height: sceneHeight } = dimensions.sceneRect;
   const size = dimensions.size;
   const numCols = Math.ceil(sceneWidth / size);

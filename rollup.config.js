@@ -1,4 +1,3 @@
-/* eslint-disable import/no-named-as-default-member */
 import * as Manifest from '@illandril/foundryvtt-utils/manifest';
 import { babel } from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';

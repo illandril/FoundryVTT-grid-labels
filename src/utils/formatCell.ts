@@ -142,24 +142,24 @@ const formatRowOrCol = (index: number, style: (typeof choices)[number]) => {
   return toExcelRow(index);
 };
 
-export const getFormatter = (grid: BaseGrid) => {
-  if (grid instanceof HexagonalGrid) {
+export const getFormatter = (grid: foundry.grid.BaseGrid) => {
+  if (grid instanceof foundry.grid.HexagonalGrid) {
     return hex;
   }
   return square;
 };
 
-const doubledIndexes = (grid: HexagonalGrid, columnIndex: number, rowIndex: number) => {
-  const [a, b] = grid.columnar ? [rowIndex, columnIndex] : [columnIndex, rowIndex];
+const doubledIndexes = (grid: foundry.grid.HexagonalGrid, columnIndex: number, rowIndex: number) => {
+  const [a, b] = grid.columns ? [rowIndex, columnIndex] : [columnIndex, rowIndex];
   let offset = b % 2;
   if (grid.even) {
     offset = 1 - offset;
   }
   const offsetA = a * 2 + offset;
-  return grid.columnar ? [b, offsetA] : [offsetA, b];
+  return grid.columns ? [b, offsetA] : [offsetA, b];
 };
 
-export const getRulerModifiers = ({ grid, scene }: GridDetails<SquareGrid>) => {
+export const getRulerModifiers = ({ grid, scene }: GridDetails<foundry.grid.SquareGrid>) => {
   const modifiers = {
     column: {
       multiplier: 1,
@@ -170,10 +170,10 @@ export const getRulerModifiers = ({ grid, scene }: GridDetails<SquareGrid>) => {
       offset: getOffset(scene, 'row'),
     },
   };
-  if (grid instanceof HexagonalGrid) {
+  if (grid instanceof foundry.grid.HexagonalGrid) {
     const variant = HexVariant.get();
     if (variant === 'doubled') {
-      if (grid.columnar) {
+      if (grid.columns) {
         modifiers.row.multiplier = 2;
       } else {
         modifiers.column.multiplier = 2;
@@ -197,12 +197,16 @@ const getOffset = (scene: Scene, type: 'col' | 'row') => {
   return 0;
 };
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Legacy
-const formatCell = ({ grid, scene }: GridDetails<SquareGrid>, rawColumnIndex: number, rawRowIndex: number) => {
+const formatCell = (
+  { grid, scene }: GridDetails<foundry.grid.SquareGrid>,
+  rawColumnIndex: number,
+  rawRowIndex: number,
+  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Legacy
+) => {
   let columnIndex = rawColumnIndex;
   let rowIndex = rawRowIndex;
   let formatter: Format;
-  if (grid instanceof HexagonalGrid) {
+  if (grid instanceof foundry.grid.HexagonalGrid) {
     formatter = hex;
     const variant = HexVariant.get();
     if (variant === 'doubled') {
@@ -212,7 +216,7 @@ const formatCell = ({ grid, scene }: GridDetails<SquareGrid>, rawColumnIndex: nu
     } else if (variant === 'axial') {
       columnIndex += getOffset(scene, 'col');
       rowIndex += getOffset(scene, 'row');
-      if (grid.columnar) {
+      if (grid.columns) {
         rowIndex = rowIndex - (columnIndex + (((grid.even ? 1 : -1) * Math.abs(columnIndex)) % 2)) / 2;
       } else {
         columnIndex = columnIndex - (rowIndex + (((grid.even ? -1 : 1) * Math.abs(rowIndex)) % 2)) / 2;

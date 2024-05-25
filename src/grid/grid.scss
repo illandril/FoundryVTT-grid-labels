@@ -61,13 +61,13 @@
   }
 
   &[data-type="hex"] {
-    & > div[data-columnar="true"] {
+    & > div[data-columns="true"] {
       &[data-offset="true"] {
         position: relative;
         top: -50%;
       }
     }
-    & > div[data-columnar="false"] {
+    & > div[data-columns="false"] {
       &[data-offset="true"] {
         position: relative;
         left: -50%;
